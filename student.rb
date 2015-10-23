@@ -122,6 +122,7 @@ private
 			amount = gets.chomp.to_i
 			validate_amount(amount)
 		end
+
 		if(amount > (@fee - total_paid_fee))
 			puts "The amount is more than the payable fees: Please Enter Again"
 			puts "remaining amount to be paid : #{@fee - total_paid_fee}"
@@ -129,7 +130,7 @@ private
 			validate_amount(amount)
 		end
 
-		if(amount < 1)
+		if(amount < 0)
 			puts "Amount can not be less than 0: Please enter again"
 			amount = gets.chomp.to_i
 			validate_amount(amount)
