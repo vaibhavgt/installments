@@ -60,15 +60,10 @@ class Student
 	def is_fees_paid
 		return true if (@fee == (@total_paid_fee))
 	end
+
 private
 
-	def pay_amount(amount)
-		@ins_str[@no_of_paid_ins] = amount
-		@total_paid_fee = @total_paid_fee + amount
-		@no_of_paid_ins += 1
-
-	end
-
+	#function in case the user pays the whole of remaining fees 
 	def complete_process(amount)
 		@total_paid_fee = @total_paid_fee + amount
 		for i in no_of_paid_ins..@no_of_ins+1
@@ -79,6 +74,9 @@ private
 		@no_of_paid_ins += 1
 	end
 
+
+	#updates the next installment in case the paid amount is less or greater than the installment
+	#also removes an installment if the total amount is greater than the current + next installments
 	def update_next_installment amount_paid
 		amount = amount_paid - next_installment
 		while(((@no_of_ins - @no_of_paid_ins) > 0) && (amount.to_i > next_installment.to_i))
@@ -98,6 +96,7 @@ private
 			p "You have #{@no_of_ins - @no_of_paid_ins} installments to pay"
 	end
 
+
 	def create_new_installment amount_paid
 			@ins_str << (@ins_str[@no_of_paid_ins].to_i - amount_paid)
 			@ins_str[@no_of_paid_ins] = amount_paid
@@ -105,6 +104,16 @@ private
 			@no_of_ins += 1
 			increment_paid_installments
 	end
+
+
+	#if the paid amount equals the installment amount
+	def pay_amount(amount)
+		@ins_str[@no_of_paid_ins] = amount
+		@total_paid_fee = @total_paid_fee + amount
+		@no_of_paid_ins += 1
+
+	end
+
 
 	def validate_amount(amount_paid)
 		amount = amount_paid
@@ -139,6 +148,5 @@ private
 	def current_installment
 		return @ins_str[@no_of_paid_ins]
 	end
-
 
 end

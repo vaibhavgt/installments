@@ -1,7 +1,6 @@
 load 'student.rb'
 
 class Students
-
 	@@stud_list = {}
 	@@num_of_studs = 0
 
@@ -25,7 +24,7 @@ class Students
 			puts "registration id: #{reg_id}"
 			puts "Name: #{student.name}"
 			puts "Installments: #{(student.ins_str).join("->")}"
-			puts "----------------------------------------------"
+			puts "--------------------------------------------"
 		end
 	end
 

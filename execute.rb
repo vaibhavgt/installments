@@ -43,6 +43,7 @@ while(flag == "y")
 		if (s.is_fees_paid)
 			puts "Fees completely paid for #{s.name}"
 			ins_flag = "n"
+			s.display_status
 		end
 	end
 	puts "pay installment for another student: y / n"
