@@ -63,13 +63,10 @@ class Student
 	end
 
 private
-
 	#function in case the user pays the whole of remaining fees 
 	def complete_process(amount)
-		p "in complete_process"
+		# p "in complete_process"
 		@total_paid_fee = @total_paid_fee + amount
-		p "paid_install: #{@no_of_paid_ins}"
-		p "no_of_ins #{@no_of_ins}"
 		@ins_str[@no_of_paid_ins] = amount
 		(@no_of_ins - (@no_of_paid_ins+1)).times do
 		   p @ins_str.pop
