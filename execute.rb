@@ -3,6 +3,7 @@ load 'students.rb'
 Students.add("Vaibhav", 13000, 4)
 Students.add("Amit" , 12000, 2)
 Students.add("Shiv", 13500, 5)
+Students.add("Mahesh", 10000, 4)
 Students.display
 
 # s = Students.find(1)
@@ -32,19 +33,27 @@ while(flag == "y")
 	puts "Want to pay installment: y / n"
 	ins_flag = gets.chomp.to_s
 	while(ins_flag == "y")
+		if (s.is_fees_paid)
+			puts "===Fees completely paid for #{s.name}==="
+			ins_flag = "n"
+			s.display_status
+			puts "===Fees completely paid for #{s.name}==="
+			break
+		end
 		puts "Please Enter Amount"
-
 		s.pay_installment(gets.chomp.to_i)
 		s.display_status
-		
+		if (s.is_fees_paid)
+			puts "===Fees completely paid for #{s.name}==="
+			ins_flag = "n"
+			s.display_status
+			puts "===Fees completely paid for #{s.name}==="
+
+			break
+		end
 		puts "Want to pay another installment: y / n"
 		ins_flag = gets.chomp.to_s
 
-		if (s.is_fees_paid)
-			puts "Fees completely paid for #{s.name}"
-			ins_flag = "n"
-			s.display_status
-		end
 	end
 	puts "pay installment for another student: y / n"
 	flag = gets.chomp.to_s

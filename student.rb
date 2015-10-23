@@ -22,7 +22,8 @@ class Student
 			return
 		end
 		amount = validate_amount(amount_paid)
-		p amount
+		p "from pay_installment #{amount}"
+
 		if (amount == (@fee - @total_paid_fee))
 			complete_process(amount)
 
@@ -65,11 +66,16 @@ private
 
 	#function in case the user pays the whole of remaining fees 
 	def complete_process(amount)
+		p "in complete_process"
 		@total_paid_fee = @total_paid_fee + amount
-		for i in no_of_paid_ins..@no_of_ins+1
-		   @ins_str.delete_at(i)
-		end
+		p "paid_install: #{@no_of_paid_ins}"
+		p "no_of_ins #{@no_of_ins}"
 		@ins_str[@no_of_paid_ins] = amount
+		(@no_of_ins - (@no_of_paid_ins+1)).times do
+		   p @ins_str.pop
+		   p @ins_str
+		end
+		
 		@no_of_ins = @no_of_ins+1-(@no_of_ins-no_of_paid_ins)
 		@no_of_paid_ins += 1
 	end
@@ -79,7 +85,7 @@ private
 	#also removes an installment if the total amount is greater than the current + next installments
 	def update_next_installment amount_paid
 		amount = amount_paid - next_installment
-		while(((@no_of_ins - @no_of_paid_ins) > 0) && (amount.to_i > next_installment.to_i))
+		while(((@no_of_ins - @no_of_paid_ins) > 0) && (amount.to_i >= next_installment.to_i))
 			p amount
 			p next_installment
 			p (@no_of_ins - @no_of_paid_ins)
@@ -115,25 +121,24 @@ private
 	end
 
 
-	def validate_amount(amount_paid)
-		amount = amount_paid
+	def validate_amount(amount)
 		unless (amount.is_a? Numeric)
 			puts "Please enter a number"
 			amount = gets.chomp.to_i
-			validate_amount(amount)
+			return validate_amount(amount)
 		end
 
 		if(amount > (@fee - total_paid_fee))
 			puts "The amount is more than the payable fees: Please Enter Again"
 			puts "remaining amount to be paid : #{@fee - total_paid_fee}"
 			amount = gets.chomp.to_i
-			validate_amount(amount)
+			return validate_amount(amount)
 		end
 
 		if(amount < 0)
 			puts "Amount can not be less than 0: Please enter again"
 			amount = gets.chomp.to_i
-			validate_amount(amount)
+			return validate_amount(amount)
 		end
 		return amount
 	end
